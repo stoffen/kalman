@@ -19,3 +19,10 @@ func TestFastMetersPerDegreeLng(t *testing.T) {
 	assert.InDelta(0.0, FastMetersPerDegreeLng(90.0), 0.001)
 	assert.InDelta(111243.6806156, FastMetersPerDegreeLng(2.1), 0.001)
 }
+
+func TestFastMetersPerDegreeLngBadValue(t *testing.T) {
+	FastMetersPerDegreeLng(-200)
+	FastMetersPerDegreeLng(200)
+	FastMetersPerDegreeLat(-200)
+	FastMetersPerDegreeLat(200)
+}

@@ -192,10 +192,21 @@ var metersPerDegreeLng = []float64{
 	0.000000,
 }
 
+// clampInt limits the value to the range [0, max-1].
+func clampInt(value, max int) int {
+	if value < 0 {
+		return 0
+	} else if value >= max {
+		return max - 1
+	}
+	return value
+}
+
 // FastMetersPerDegreeLat returns meters per a latitude degree using a pre-computed lookup table.
 func FastMetersPerDegreeLat(lat float64) float64 {
-	i0 := int(math.Floor(lat))
-	i1 := int(math.Ceil(lat))
+	i0 := clampInt(int(math.Floor(lat)), len(metersPerDegreeLat))
+	i1 := clampInt(int(math.Ceil(lat)), len(metersPerDegreeLat))
+
 	x := lat - float64(i0)
 	m0 := metersPerDegreeLat[i0]
 	m1 := metersPerDegreeLat[i1]
@@ -204,8 +215,8 @@ func FastMetersPerDegreeLat(lat float64) float64 {
 
 // FastMetersPerDegreeLng returns meters per a longitude degree using a pre-computed lookup table.
 func FastMetersPerDegreeLng(lng float64) float64 {
-	i0 := int(math.Floor(lng))
-	i1 := int(math.Ceil(lng))
+	i0 := clampInt(int(math.Floor(lng)), len(metersPerDegreeLng))
+	i1 := clampInt(int(math.Ceil(lng)), len(metersPerDegreeLng))
 	x := lng - float64(i0)
 	m0 := metersPerDegreeLng[i0]
 	m1 := metersPerDegreeLng[i1]
